@@ -24,4 +24,9 @@ public class TableFoodControllder {
     public TableFood createTableFood(@RequestBody TableBean tableBean) {
         return tableFoodService.createTableFood(tableBean);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteTableById(@PathVariable Integer id) {
+         tableFoodService.deleteTableById(id);
+    }
 }

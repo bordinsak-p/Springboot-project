@@ -1,5 +1,6 @@
 package com.basic.resful.services;
 
+import com.basic.resful.Beans.FoodMenuBean;
 import com.basic.resful.entity.FoodMenu;
 import com.basic.resful.repository.FoodMenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +22,16 @@ public class FoodMenuService {
         return foodMenuRepository.findAll();
     }
 
+    // insert
     public FoodMenu getFoodMenuById(Integer id) {
         return foodMenuRepository.findById(id).orElse(null);
     }
 
-    public FoodMenu createFoodMenu(String foodName, double price, MultipartFile imageFile) {
+    public FoodMenu createFoodMenu(FoodMenuBean foodMenuBean, MultipartFile imageFile) {
         FoodMenu newFoodMenu = new FoodMenu();
 
-        newFoodMenu.setFoodName(foodName);
-        newFoodMenu.setPrice(price);
+        newFoodMenu.setFoodName(foodMenuBean.getFoodName());
+        newFoodMenu.setPrice(foodMenuBean.getPrice());
     
         if (imageFile != null && !imageFile.isEmpty()) {
             try {
@@ -46,15 +48,17 @@ public class FoodMenuService {
         // insert to db
         return foodMenuRepository.save(newFoodMenu);
     }
-    
-    public FoodMenu updateFoodMenu(Integer id, String foodName, double price, MultipartFile imageFile) {
+
+    // update
+    public FoodMenu updateFoodMenu(FoodMenuBean foodMenuBean, MultipartFile imageFile) {
         // query data from db
-        FoodMenu foodMenuQuery = foodMenuRepository.findById(id).orElse(null);
+        int foodMenuId = foodMenuBean.getId();
+        FoodMenu foodMenuQuery = foodMenuRepository.findById(foodMenuId).orElse(null);
 
         if (foodMenuQuery != null) {
 
-            foodMenuQuery.setFoodName(foodName);
-            foodMenuQuery.setPrice(price);
+            foodMenuQuery.setFoodName(foodMenuBean.getFoodName());
+            foodMenuQuery.setPrice(foodMenuBean.getPrice());
     
             if (imageFile != null && !imageFile.isEmpty()) {
                 try {
@@ -74,12 +78,12 @@ public class FoodMenuService {
         return null;
     }
     
-
+    //delete 
     public void deleteFoodMenu(Integer id) {
         try {
             foodMenuRepository.deleteById(id);
         } catch (Exception e) {
-        
+            e.printStackTrace();
         }
     }
 

@@ -32,7 +32,7 @@ public class OrdersService {
             orders.setQuantity(ordersBean.getQuantity());
             orders.setTotalprice(ordersBean.getTotalprice());    
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
         }
 
         return orderRepository.save(orders);

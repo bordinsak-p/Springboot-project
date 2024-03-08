@@ -1,5 +1,6 @@
 package com.basic.resful.controller;
 
+import com.basic.resful.Beans.FoodMenuBean;
 import com.basic.resful.entity.FoodMenu;
 import com.basic.resful.services.FoodMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,17 +33,13 @@ public class FoodMenuControllder {
     }
 
     @PostMapping
-    public FoodMenu createFoodMenu(@RequestParam("imageFile") MultipartFile imageFile,
-            @RequestParam("foodName") String foodName, @RequestParam("price") double price) {
-        return foodMenuService.createFoodMenu(foodName, price, imageFile);
+    public FoodMenu createFoodMenu(FoodMenuBean foodMenuBean, @RequestParam("imageFile") MultipartFile imageFile) {
+        return foodMenuService.createFoodMenu(foodMenuBean, imageFile);
     }
 
-    @PutMapping("/{id}")
-    public FoodMenu updateFoodMenu(@PathVariable Integer id,
-            @RequestParam("imageFile") MultipartFile imageFile,
-            @RequestParam("foodName") String foodName,
-            @RequestParam("price") double price) {
-        return foodMenuService.updateFoodMenu(id, foodName, price, imageFile);
+    @PutMapping
+    public FoodMenu updateFoodMenu(FoodMenuBean foodMenuBean, @RequestParam("imageFile") MultipartFile imageFile) {
+        return foodMenuService.updateFoodMenu(foodMenuBean, imageFile);
     }
 
     @DeleteMapping("/{id}")
