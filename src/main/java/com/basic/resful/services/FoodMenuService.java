@@ -1,6 +1,6 @@
 package com.basic.resful.services;
 
-import com.basic.resful.entity.FoodMenuBean;
+import com.basic.resful.entity.FoodMenu;
 import com.basic.resful.repository.FoodMenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,16 +17,16 @@ public class FoodMenuService {
     @Autowired
     FoodMenuRepository foodMenuRepository;
 
-    public List<FoodMenuBean> getAllFoodMenu() {
+    public List<FoodMenu> getAllFoodMenu() {
         return foodMenuRepository.findAll();
     }
 
-    public FoodMenuBean getFoodMenuById(Integer id) {
+    public FoodMenu getFoodMenuById(Integer id) {
         return foodMenuRepository.findById(id).orElse(null);
     }
 
-    public FoodMenuBean createFoodMenu(String foodName, double price, MultipartFile imageFile) {
-        FoodMenuBean newFoodMenu = new FoodMenuBean();
+    public FoodMenu createFoodMenu(String foodName, double price, MultipartFile imageFile) {
+        FoodMenu newFoodMenu = new FoodMenu();
 
         newFoodMenu.setFoodName(foodName);
         newFoodMenu.setPrice(price);
@@ -47,9 +47,9 @@ public class FoodMenuService {
         return foodMenuRepository.save(newFoodMenu);
     }
     
-    public FoodMenuBean updateFoodMenu(Integer id, String foodName, double price, MultipartFile imageFile) {
+    public FoodMenu updateFoodMenu(Integer id, String foodName, double price, MultipartFile imageFile) {
         // query data from db
-        FoodMenuBean foodMenuQuery = foodMenuRepository.findById(id).orElse(null);
+        FoodMenu foodMenuQuery = foodMenuRepository.findById(id).orElse(null);
 
         if (foodMenuQuery != null) {
 
@@ -76,7 +76,11 @@ public class FoodMenuService {
     
 
     public void deleteFoodMenu(Integer id) {
-        foodMenuRepository.deleteById(id);
+        try {
+            foodMenuRepository.deleteById(id);
+        } catch (Exception e) {
+        
+        }
     }
 
 }
